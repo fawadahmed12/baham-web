@@ -1,11 +1,14 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
-
-
 urlpatterns = [
-    path('', views.view_home, name='home'),
-    path('baham/vehicles', views.view_vehicles, name='vehicles'),
-    path('baham/vehicles/create', views.create_vehicle, name='createvehicle'),
-    path('baham/vehicles/save/', views.save_vehicle, name='savevehicle'),
-    path('baham/aboutus', views.view_aboutus, name='aboutus'),
+    path('', views.view_home, name="home"),
+    path('about', views.view_home, name="about"),
+    path('contact', views.view_home, name="contact"),
+    path('vehicles', views.view_vehicles, name="vehicles"),
+    path('vehicles/addvehicle', views.view_addvehicle, name="addvehicle"),
+    path('vehicles/addvehicle/save', views.save_vehicle, name="create_vehicle"),
+    path('vehicles/updatevehicle', views.updatevehicle, name="update"),
+    path('vehicles/voided/<uuid:id>', views.voided, name="voided"),
+    path('vehicles/unvoided/<uuid:id>', views.unvoided, name="unvoided"),
+    
 ]

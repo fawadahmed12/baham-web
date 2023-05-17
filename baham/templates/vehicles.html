@@ -1,39 +1,46 @@
 {% include 'header.html' %}
+{% include 'navbar.html' %}
+<main class="container my-4">
+    <h1>Vehicle List</h1>
 
-<main role="main">
-
-    <div class="container col-auto">
-        <span class="text-center"><h2>Vehicles seeking your companionship</h2></span>
-        <table id="dataTable" class="table table-striped display table-responsive">
+        <table class="table table-responsive table-striped" >
             <thead>
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Manufacturer</th>
-                    <th scope="col">Model Name</th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Sitting Capacity</th>
-                    <th scope="col">Total Registered</th>
-                    <th scope="col">Edit/Delete</th>
+                    <th>Make</th>
+                    <th>Model</th>
+                    <th>Type</th>
+                    <th>Capacity</th>
+                    <td>Action</td>
                 </tr>
             </thead>
-            {% for vehicle in vehicles %}
+            <tbody>
+                {% for vehicle in vehicle_data %}
                 <tr>
-                    <td><a class="btn-link" href="#">{{vehicle.model_id}}</a></td>
-                    <td>{{vehicle.vendor}}</td>
-                    <td>{{vehicle.model}}</td>
-                    <td>{{vehicle.type}}</td>
-                    <td>{{vehicle.capacity}}</td>
-                    <td>0</td>
-                    <td>
-                        <button class="btn btn-warning">Edit</button>
-                        <button class="btn btn-danger" disabled="disabled">Delete</button>
-                    </td>
+                    <td>{{ vehicle.vendor }}</td>
+                    <td>{{ vehicle.model }}</td>
+                    <td>{{ vehicle.type }}</td>
+                    <td>{{ vehicle.capacity }}</td>
+                    <td><div class="row"><div><a href="{% url 'update' %}" class="btn-sm btn-primary">Edit</a></div> 
+                        <div>
+                            {% if vehicle.voided == 1 %}
+                               <a href="{% url 'unvoided' id=vehicle.uuid %}"  class="btn-sm btn-primary text-white mx-2">Restore</a>
+                
+                            {% else %}
+                                <a href="{% url 'voided' id=vehicle.uuid %}"  class="btn-sm btn-danger text-white mx-2">Delete</a>
+                            {% endif %}
+
+                        </div>
+                    </div></td>
                 </tr>
-            {% endfor %}
+                {% empty %}
+                <tr>
+                    <td colspan="4">No vehicles found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
         </table>
-        <a class="btn btn-success" href="{% url 'createvehicle' %}">Add yours</a>
-    </div> <!-- /container -->
 
+    
+    <a href="{% url 'addvehicle' %}"><button class="btn btn-success">Create New</button></a>
 </main>
-
 {% include 'footer.html' %}
